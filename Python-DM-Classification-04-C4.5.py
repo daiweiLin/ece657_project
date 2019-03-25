@@ -175,7 +175,7 @@ def dt_c45(Xdata, ydata, cat_missing = "none", num_missing = "none", pre_pruning
                else:
                    ydata.iloc[i,j] = "one"
     dataset = pd.concat([ydata, Xdata], axis = 1)
-    
+#     print(len(dataset[0]))
      # Preprocessing - Boolean Values
     for j in range(0, dataset.shape[1]):
         if dataset.iloc[:,j].dtype == "bool":
@@ -251,6 +251,8 @@ def dt_c45(Xdata, ydata, cat_missing = "none", num_missing = "none", pre_pruning
             if len(branch[i]) == 0:
                 skip_update = True 
                 break
+#             print(len(branch[i]))
+#             print(np.unique(branch[i][0]))
             if len(np.unique(branch[i][0])) == 1 or len(branch[i]) == 1:
                  if "." not in rule[i]:
                      rule[i] = rule[i] + " THEN " + name + " = " + branch[i].iloc[0, 0] + "."
