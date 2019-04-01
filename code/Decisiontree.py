@@ -8,21 +8,27 @@ import Tree
 class DecisionTree:
     def __init__(self, data):
         self.data = data
-        self.tree = Tree()
+        self.left = None
+        self.right = None
+
+        self.feature = None
+        self.value = None
+        self.isleafnode = False
 
 
-    def find_split_val(self,data):
+    def find_split_val(self, data):
         # Find best split value
-        class_values = list(set(row[-1] for row in data))
-        b_index, b_value, b_score, b_groups = 999, 999, 999, None
-        for index in range(len(data[0]) - 1):
-            for row in data:
+        class_values = list(set(data['class'].values))
+        split_index, split_value, split_score, split_groups = 999, 999, 999, None
+
+        for row in data.iterrow():
+            for index in range(len(data[0]) - 1):
                 groups = self.split(index, row[index], data)
                 gini = self.gini_index(groups, class_values)
                 print('X%d < %.3f Gini=%.3f' % ((index + 1), row[index], gini))
-                if gini < b_score:
-                    b_index, b_value, b_score, b_groups = index, row[index], gini, groups
-        return {'index': b_index, 'value': b_value, 'groups': b_groups}
+                if gini < split_score:
+                    split_index, split_value, split_score, split_groups = index, row[index], gini, groups
+        return split_index, split_value, split_groups
 
     def split(self, val, feature, data):
         # split data according to value
@@ -63,7 +69,18 @@ class DecisionTree:
 
     def train(self):
         # grow a tree
-        return None
+        split_index, split_value, split_groups = self.find_split_val(self.data)
+        self.tree.left = split_groups[0]
+        self.tree.right = split_groups[1]
+        self.tree.feature = split_index
+        self.tree.value = split_value
+
+        if self.gini_index(groups=data, classes=):
+            self.tree.left.train()
+            self.tree.right.train()
+        # terminate
+
+        return
 
     def predict(self, data):
         pred = np.zeros((data.shape[0], 1))
@@ -71,6 +88,7 @@ class DecisionTree:
 
     def prune(self, tree):
         # prune here
+        # post pruning
         pruned_tree = tree
         return pruned_tree
 
