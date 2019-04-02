@@ -100,7 +100,7 @@ class DecisionTreeC45Node(BaseEstimator, ClassifierMixin):
 
     def entropy(self, groups, classes):
 
-        
+
 
 
     def gini_index(self, groups, classes):
