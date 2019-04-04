@@ -150,7 +150,7 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         cat_B = comb[1]
         c_table.loc[cat_A,] = c_table.loc[cat_A,] + c_table.loc[cat_B,]
         c_table = c_table.drop(labels=[cat_B], axis=0)
-        c_table = c_table.rename(index={cat_A: cat_A+','+cat_B})
+        c_table = c_table.rename(index={cat_A: str(cat_A)+','+str(cat_B)})
 
         return c_table
 
@@ -161,9 +161,9 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
 
         contingency_table = pd.crosstab(data[feature], data['class'])
         unique_category = contingency_table.index.tolist()
-
+#         print("contingency table: \n {}".format(contingency_table))
+#         print("feature:{}, unique_category:{}".format(feature,unique_category))
         b_groups, adj_p = None, None
-
         c = len(unique_category)
 
         if c == 1:
@@ -213,6 +213,7 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
             r = len(unique_category)
             adj_p = self.bonf_adjust(p,c,r)
             b_groups = list()
+            print(unique_category)
             for gr in unique_category:
                 b_groups.append(gr.split(','))
 
@@ -265,6 +266,14 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         self.isleaf = True
         self.depth = depth
 
+    def num_to_cat(self, data, num_cols, k):
+        # convert numerical features into categorical
+        # using binning (quantile cut into k bins)
+        labels = [str(x) for x in range(k)]
+        for col in num_cols:
+            data[col] = pd.qcut(data[col], k, labels=labels)
+
+
     def fit(self, X, y):
         # grow a tree
         # n = len(X.columns)
@@ -281,10 +290,13 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         #         i += 1
         #     self.cat_features = cat_features_idx
 
-        X = X.values.tolist()
-        y = y.values.tolist()
-        # potential_features = np.linspace(0, n - 1, n, dtype=np.int32).tolist()
+#         X = X.values.tolist()
+#         y = y.values.tolist()
         potential_features = X.columns.tolist()
+        X['class'] = y
+        data = X
+        # potential_features = np.linspace(0, n - 1, n, dtype=np.int32).tolist()
+
         self.grow(data, 1, potential_features)
         return self
 
