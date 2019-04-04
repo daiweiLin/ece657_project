@@ -78,12 +78,7 @@ class DecisionTreeNode(BaseEstimator, ClassifierMixin):
                 else:
                     right_X.append(row)
                     right_y.append(y[idx])
-        #             idx = X[feature] == val
-        #             left_X = X.loc[idx]
-        #             left_y = y.loc[idx]
-        #             idx = ~idx
-        #             right_X = X.loc[idx]
-        #             right_y = y.loc[idx]
+
         else:
             # numerical feature
             # data with feature value smaller than val goes to left ( feature < val )
@@ -137,18 +132,22 @@ class DecisionTreeNode(BaseEstimator, ClassifierMixin):
         else:
 
             best_split = self.find_split_val(X, y)
-            self.split_val = best_split['value']
-            self.split_feature = best_split['index']
             [left, right] = best_split['groups']
 
-            #             print("{}X{} < {} gini={}".format(self.depth*' ',self.split_feature+1, self.split_val, best_split['gini']))
-            #             print("left - Class 0:{},class 1:{}".format(np.sum(left.iloc[:,-1]==0),np.sum(left.iloc[:,-1]==1)))
-            #             print("right - Class 0:{},class 1:{}".format(np.sum(right.iloc[:,-1]==0),np.sum(right.iloc[:,-1]==1)))
+            if len(left['y']) == 0 or len(right['y']) == 0:
+                # X not separable
+                self.terminate(left['y']+right['y'], depth)
+                # print("{}X{} < {} gini={}".format(self.depth*' ', self.split_feature+1, self.split_val, best_split['gini']))
+                # print("left - {}".format(left['y']))
+                # print("right - {}".format(right['y']))
+            else:
+                self.split_val = best_split['value']
+                self.split_feature = best_split['index']
 
-            self.left = DecisionTreeNode(self.max_depth, self.cat_features)
-            self.right = DecisionTreeNode(self.max_depth, self.cat_features)
-            self.left.grow(left['X'], left['y'], depth + 1)
-            self.right.grow(right['X'], right['y'], depth + 1)
+                self.left = DecisionTreeNode(self.max_depth, self.cat_features)
+                self.right = DecisionTreeNode(self.max_depth, self.cat_features)
+                self.left.grow(left['X'], left['y'], depth + 1)
+                self.right.grow(right['X'], right['y'], depth + 1)
 
         self.depth = depth
         return
@@ -162,6 +161,20 @@ class DecisionTreeNode(BaseEstimator, ClassifierMixin):
 
     def fit(self, X, y):
         # grow a tree
+        # only called once at root node
+
+        # convert cat_feature to its index in data X's columns
+        if self.cat_features is None:
+            self.cat_features = []
+        else:
+            i = 0
+            cat_features_idx = []
+            for col in X.columns:
+                if col in self.cat_features:
+                    cat_features_idx.append(i)
+                i += 1
+            self.cat_features = cat_features_idx
+
         X = X.values.tolist()
         y = y.values.tolist()
         self.grow(X, y, 1)
