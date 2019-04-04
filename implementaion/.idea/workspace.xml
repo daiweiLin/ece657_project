@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38fd82e0-124f-4403-bae6-aae29cb8c139" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Daiwei_Lin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Decisiontree_CHAID.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mem_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/C45_in_tree-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/C45_in_tree-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/Chronic_kidney-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/Chronic_kidney-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/Spam-Filtering-5-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/Spam-Filtering-5-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../C4-Copy1.5OnallDatasets.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../C4-Copy1.5OnallDatasets.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../C45_in_tree.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../C45_in_tree.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CART_in_tree.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../CART_in_tree.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Chronic_kidney.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Chronic_kidney.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spam-Filtering-5.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Spam-Filtering-5.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Decisiontree.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decisiontree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Decisiontree_C45.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decisiontree_C45.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Decisiontree_CHAID.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+            <state relative-caret-position="532">
+              <caret line="279" column="48" lean-forward="true" selection-start-line="279" selection-start-column="48" selection-end-line="279" selection-end-column="48" />
               <folding>
                 <element signature="e#63#81#0" expanded="true" />
               </folding>
@@ -265,8 +251,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Decisiontree_CHAID.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+        <state relative-caret-position="532">
+          <caret line="279" column="48" lean-forward="true" selection-start-line="279" selection-start-column="48" selection-end-line="279" selection-end-column="48" />
           <folding>
             <element signature="e#63#81#0" expanded="true" />
           </folding>
