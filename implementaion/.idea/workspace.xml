@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38fd82e0-124f-4403-bae6-aae29cb8c139" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Daiwei_Lin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Decisiontree_CHAID.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mem_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/C45_in_tree-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/C45_in_tree-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/Chronic_kidney-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/Chronic_kidney-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/Spam-Filtering-5-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/Spam-Filtering-5-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../C4-Copy1.5OnallDatasets.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../C4-Copy1.5OnallDatasets.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../C45_in_tree.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../C45_in_tree.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CART_in_tree.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../CART_in_tree.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Chronic_kidney.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Chronic_kidney.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spam-Filtering-5.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Spam-Filtering-5.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Decisiontree.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decisiontree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Decisiontree_C45.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decisiontree_C45.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,10 +27,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mem_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="481">
+              <caret line="176" column="35" selection-start-line="176" selection-start-column="35" selection-end-line="176" selection-end-column="35" />
+              <folding>
+                <element signature="e#1#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Decisiontree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+            <state relative-caret-position="-505">
+              <caret line="169" column="17" selection-start-line="169" selection-start-column="17" selection-end-line="169" selection-end-column="17" />
               <folding>
                 <element signature="e#78#96#0" expanded="true" />
               </folding>
@@ -27,11 +50,26 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Decisiontree_C45.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="102" selection-start-line="102" selection-end-line="102" />
+            <state relative-caret-position="535">
+              <caret line="173" selection-start-line="173" selection-end-line="174" selection-end-column="61" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Decisiontree_CHAID.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="498">
+              <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+              <folding>
+                <element signature="e#63#81#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -45,6 +83,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>self.cat_</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -56,7 +99,10 @@
         <option value="$PROJECT_DIR$/tree.py" />
         <option value="$PROJECT_DIR$/Tree.py" />
         <option value="$PROJECT_DIR$/Decisiontree.py" />
+        <option value="$PROJECT_DIR$/Chronic_kidney.py" />
         <option value="$PROJECT_DIR$/Decisiontree_C45.py" />
+        <option value="$PROJECT_DIR$/mem_test.py" />
+        <option value="$PROJECT_DIR$/Decisiontree_CHAID.py" />
       </list>
     </option>
   </component>
@@ -177,10 +223,30 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/Lib/Decisiontree.py" />
     <entry file="file://$PROJECT_DIR$/Tree.py" />
+    <entry file="file://$PROJECT_DIR$/Chronic_kidney.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1849">
+          <caret line="148" selection-start-line="148" selection-end-line="148" selection-end-column="61" />
+          <folding>
+            <element signature="e#29#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mem_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="176" column="35" selection-start-line="176" selection-start-column="35" selection-end-line="176" selection-end-column="35" />
+          <folding>
+            <element signature="e#1#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Decisiontree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+        <state relative-caret-position="-505">
+          <caret line="169" column="17" selection-start-line="169" selection-start-column="17" selection-end-line="169" selection-end-column="17" />
           <folding>
             <element signature="e#78#96#0" expanded="true" />
           </folding>
@@ -189,8 +255,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Decisiontree_C45.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        <state relative-caret-position="535">
+          <caret line="173" selection-start-line="173" selection-end-line="174" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Decisiontree_CHAID.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="498">
+          <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+          <folding>
+            <element signature="e#63#81#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
