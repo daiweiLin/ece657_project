@@ -17,14 +17,15 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
-    def __init__(self, max_depth, alpha_merge, alpha_stop, cat_features=None, ):
+    def __init__(self, max_depth, alpha_merge, alpha_stop, num_features=None, k=5):
         # property
         self.max_depth = max_depth
 
         # constant
-        self.cat_features = cat_features
+        self.num_features = num_features
         self.alpha_merge = alpha_merge
         self.alpha_stop = alpha_stop
+        self.k = k
 
         # variables
         self.children = list()
@@ -32,8 +33,8 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
 
         self.split_val = None
         self.split_feature = None
-        self.is_cat_feature = False
         self.classification = None
+        self.is_num_feature = False
 
         self.depth = 0
 
@@ -41,7 +42,7 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         # check whether the branch is pure() having same class )
 
         # compare all class label with the class of first row.
-        #         print(y)
+        # print(y)
         for i in y:
             if i != y[0]:
                 return False
@@ -52,10 +53,9 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
 
         b_feature, b_value, b_score, b_groups = None, None, None, None
 
-
         for feature in potential_features:
             b_groups_of_cat, adj_p = self.merge(feature, data)
-            print("feature:{} adj_p:{}, groups:{}".format(feature,adj_p, b_groups_of_cat))
+            #             print("feature:{} adj_p:{}, groups:{}".format(feature,adj_p, b_groups_of_cat))
 
             if b_score is None or adj_p < b_score:
                 if b_groups_of_cat is None:
@@ -89,32 +89,6 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
 
         return groups
 
-
-        # if feature in self.cat_features:
-        # categorical feature ( multiple branches )
-        # create branches for each category
-        # for idx, row in enumerate(X):
-        #     if row[feature] in groups.keys():
-        #         groups[row[feature]]['X'].append(row)
-        #         groups[row[feature]]['y'].append(y[idx])
-        #     else:
-        #         groups[row[feature]] = {'X': [row], 'y': [y[idx]]}
-        # else:
-        #     # numerical feature (binary branches)
-        #     # data with feature value smaller than val goes to left ( feature < val )
-        #     # the rest goes to right
-        #     groups['left'] = {'X': list(), 'y': list()}
-        #     groups['right'] = {'X': list(), 'y': list()}
-        #     for idx, row in enumerate(X):
-        #         if row[feature] < val:
-        #             groups['left']['X'].append(row)
-        #             groups['left']['y'].append(y[idx])
-        #         else:
-        #             groups['right']['X'].append(row)
-        #             groups['right']['y'].append(y[idx])
-
-        # return groups
-
     def bonf_adjust(self, p, c, r):
         '''
 
@@ -125,9 +99,9 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         '''
         B = 0.0
         for i in range(r):
-            B += math.pow(-1,i) * math.pow(r-i, c) / (math.factorial(r) * math.factorial(r-i))
+            B += math.pow(-1, i) * math.pow(r - i, c) / (math.factorial(r) * math.factorial(r - i))
         p * B
-#         print("p {}, c {}, r {}, B {}, adj_p {}".format(p,c,r,B, B*p))
+        #         print("p {}, c {}, r {}, B {}, adj_p {}".format(p,c,r,B, B*p))
         return p * B
 
     def rm_empty_col(self, c_table):
@@ -150,7 +124,7 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         cat_B = comb[1]
         c_table.loc[cat_A,] = c_table.loc[cat_A,] + c_table.loc[cat_B,]
         c_table = c_table.drop(labels=[cat_B], axis=0)
-        c_table = c_table.rename(index={cat_A: str(cat_A)+','+str(cat_B)})
+        c_table = c_table.rename(index={cat_A: str(cat_A) + ',' + str(cat_B)})
 
         return c_table
 
@@ -161,8 +135,8 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
 
         contingency_table = pd.crosstab(data[feature], data['class'])
         unique_category = contingency_table.index.tolist()
-#         print("contingency table: \n {}".format(contingency_table))
-#         print("feature:{}, unique_category:{}".format(feature,unique_category))
+        #         print("contingency table: \n {}".format(contingency_table))
+        #         print("feature:{}, unique_category:{}".format(feature,unique_category))
         b_groups, adj_p = None, None
         c = len(unique_category)
 
@@ -186,7 +160,7 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
                 # Get the best combination with
                 # highest p value for all pairs of categories
                 b_comb, b_pvalue = None, None
-                for comb in itertools.combinations(unique_category,2):
+                for comb in itertools.combinations(unique_category, 2):
                     sub_table = contingency_table.loc[list(comb)]
                     sub_table = self.rm_empty_col(sub_table.values)
 
@@ -211,9 +185,9 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
             chi2, p, _, _ = chi2_contingency(contingency_table)
             # Bonferroni adjustment of p value
             r = len(unique_category)
-            adj_p = self.bonf_adjust(p,c,r)
+            adj_p = self.bonf_adjust(p, c, r)
             b_groups = list()
-            print(unique_category)
+            #             print(unique_category)
             for gr in unique_category:
                 b_groups.append(gr.split(','))
 
@@ -233,27 +207,24 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
             if best_split['adj_p'] <= self.alpha_stop:
                 self.split_val = best_split['value']
                 self.split_feature = best_split['index']
-                # self.is_cat_feature = best_split['is_cat_feature']
-                print("\nsplit on feature:{} adj_p={}".format(self.split_feature, best_split['adj_p']))
-
-
+                self.is_num_feature = self.split_feature in self.num_features
+                # print("\nsplit on feature:{} adj_p={}".format(self.split_feature, best_split['adj_p']))
 
                 for idx, gr in best_split['groups'].items():
-                    node = DecisionTreeCHAIDNode(self.max_depth,self.alpha_merge,self.alpha_stop)
+                    node = DecisionTreeCHAIDNode(self.max_depth, self.alpha_merge, self.alpha_stop, num_features=self.num_features)
                     new_potential_features = copy.deepcopy(potential_features)
 
                     if len(self.split_val[idx]) == 1:
-                        print(self.split_val[idx])
-                        print(new_potential_features)
+                        # print(self.split_val[idx])
+                        # print(new_potential_features)
                         new_potential_features.remove(self.split_feature)
-                    print("---- new node with features:{}, split_val:{}".format(new_potential_features,self.split_val[idx]))
+                    # print("---- new node with features:{}, split_val:{}".format(new_potential_features,self.split_val[idx]))
                     node.grow(gr, depth + 1, new_potential_features)
                     self.children.append(node)
             else:
-                print("adj_p {} larger than alpha stop".format(best_split['adj_p']))
+                # print("adj_p {} larger than alpha stop".format(best_split['adj_p']))
                 self.terminate(y, depth)
-                #             print("{}X{} < {} gini={}".format(self.depth*' ',self.split_feature+1, self.split_val, best_split['gini']))
-
+                # print("{}X{} < {} gini={}".format(self.depth*' ',self.split_feature+1, self.split_val, best_split['gini']))
 
         self.depth = depth
         return
@@ -261,55 +232,84 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
     def terminate(self, y, depth):
         # define leaf node
         # most frequent class in the data as class label of this node
-        print("terminate at depth {}".format(depth))
+        # print("terminate at depth {}".format(depth))
         self.classification = max(set(y), key=y.count)
         self.isleaf = True
         self.depth = depth
 
-    def num_to_cat(self, data, num_cols, k):
-        # convert numerical features into categorical
-        # using binning (quantile cut into k bins)
-        labels = [str(x) for x in range(k)]
-        for col in num_cols:
-            data[col] = pd.qcut(data[col], k, labels=labels)
+    def num_to_cat(self, data, num_features, k, is_train, all_bins=None):
+        # Convert numerical features into categorical
+        data_discretized = copy.copy(data)
+        if is_train:
+            # Convert training data
+            # using binning (quantile cut into k bins)
+            labels = [str(x) for x in range(k)]
+            numeric_bins = dict()
+            print("numerical features:{}".format(num_features))
+            for f in num_features:
+                # print("f: {}".format(f))
+                cat_col, bins = pd.qcut(data_discretized[f], k, retbins=True, duplicates='drop')
+                bins = bins.astype(np.float64)
+                bins[0] = -np.inf
+                bins[-1] = np.inf
+                numeric_bins[f] = bins
+                cat_col.cat.categories = labels[:len(bins) - 1]
+                data_discretized.loc[:, f] = cat_col.astype(str)
+        else:
+            # Convert testing data
+            # match testing data X into numerical bins
+            labels = [str(x) for x in range(k)]
+            numeric_bins = dict()
+            for f in num_features:
+                bins = all_bins[f]
+                cat_col = pd.cut(data_discretized[f], bins=bins, labels=labels[:len(bins) - 1])
+                data_discretized.loc[:, f] = cat_col.astype(str)
 
+        return data_discretized, numeric_bins
 
     def fit(self, X, y):
         # grow a tree
         # n = len(X.columns)
 
-        # # convert cat_feature to its index in data X's columns
-        # if self.cat_features is None:
-        #     self.cat_features = []
-        # else:
-        #     i = 0
-        #     cat_features_idx = []
-        #     for col in X.columns:
-        #         if col in self.cat_features:
-        #             cat_features_idx.append(i)
-        #         i += 1
-        #     self.cat_features = cat_features_idx
+        if self.num_features is None:
+            self.num_features = []
 
-#         X = X.values.tolist()
-#         y = y.values.tolist()
         potential_features = X.columns.tolist()
         X['class'] = y
         data = X
-        # potential_features = np.linspace(0, n - 1, n, dtype=np.int32).tolist()
 
-        self.grow(data, 1, potential_features)
+        data_discretized, numeric_bins = self.num_to_cat(data, self.num_features, self.k, is_train=True)
+
+        # only define at root node
+        self.numeric_bins = numeric_bins  # dictionary type
+        self.default_class = y.iloc[0]
+        self.grow(data_discretized, 1, potential_features)
         return self
 
-    def print_tree(self):
+    ##############
+    # Print tree #
+    ##############
+    def print_tree_iterate(self, numeric_bins):
         if not self.isleaf:
-#             if self.is_cat_feature:
-            for i in range(len(self.split_val)):
-                print("{}X{} = {} ".format(self.depth * ' ', self.split_feature, self.split_val[i]))
-                self.children[i].print_tree()
+            if self.is_num_feature:
+                for i in range(len(self.split_val)):
+                    print("{}X{} in range {} ".format(self.depth * ' ', self.split_feature, numeric_bins[self.split_feature]))
+                    self.children[i].print_tree_iterate(numeric_bins)
+            else:
+                for i in range(len(self.split_val)):
+                    print("{}X{} = {} ".format(self.depth * ' ', self.split_feature, self.split_val[i]))
+                    self.children[i].print_tree_iterate(numeric_bins)
         else:
             print("{}[{}]".format(self.depth * ' ', self.classification))
 
-    def predict_iterate(self, row):
+    def print_tree(self):
+        # this function is only defined for root node
+        self.print_tree_iterate(self.numeric_bins)
+
+    ##############
+    # Prediction #
+    ##############
+    def predict_iterate(self, row, default_class):
 
         if self.isleaf:
             # is leaf node
@@ -317,16 +317,20 @@ class DecisionTreeCHAIDNode(BaseEstimator, ClassifierMixin):
         else:
             # not leaf node
             # predict categorical feature
+#             print("NodeFeature:{}, NodeSplitVal={}".format(self.split_feature,self.split_val))
             for i in range(len(self.split_val)):
+
                 if row[self.split_feature] in self.split_val[i]:
-                    return self.children[i].predict_iterate(row)
-            return None
+                    return self.children[i].predict_iterate(row, default_class)
+
+            # if it cannot find such combination of feature categories, return a default class.
+            return default_class
 
     def predict(self, X):
-        num_rows = X.shape[0]
+        X_discretized, _ = self.num_to_cat(X, self.num_features, self.k, is_train=False, all_bins=self.numeric_bins)
+#         print(X_discretized.head(2))
         prediction = []
-        #         prediction = np.zeros((num_rows,1))
-        for _, row in X.iterrows():
-            prediction.append(self.predict_iterate(row))
+        for _, row in X_discretized.iterrows():
+            prediction.append(self.predict_iterate(row, self.default_class))
 
         return np.array(prediction)
