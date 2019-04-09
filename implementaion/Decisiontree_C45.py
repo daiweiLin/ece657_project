@@ -35,8 +35,9 @@ class DecisionTreeC45Node(BaseEstimator, ClassifierMixin):
 
         # compare all class label with the class of first row.
         #         print(y)
+        y_i = y[0]
         for i in y:
-            if i != y[0]:
+            if i != y_i:
                 return False
         return True
 
@@ -158,9 +159,9 @@ class DecisionTreeC45Node(BaseEstimator, ClassifierMixin):
         return splitting_info
 
     def grow(self, X, y, depth, potential_features):
-        #         print("\ndepth={}, p_features={}".format(depth,potential_features))
+        # print("\ndepth={}, p_features={}".format(depth,potential_features))
         if self.is_pure(y) or self.max_depth <= depth or len(potential_features) == 0:
-            #             print("terminate at depth={}".format(depth))
+            # print("terminate at depth={}".format(depth))
             self.terminate(y, depth)
             return
         else:
