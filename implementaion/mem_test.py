@@ -216,9 +216,9 @@ def chaid_classification(X_train, X_test, y_train, y_test, num_cols):
 if __name__ == '__main__':
     #########################################################################
     # process data set
-    # X, y, str_cols, num_cols = ckd_dataset_process()
+    X, y, str_cols, num_cols = ckd_dataset_process()
     # X, y, str_cols, num_cols = bc_dataset_process()
-    X, y, str_cols, num_cols = CHAID_bc_dataset_process()
+    # X, y, str_cols, num_cols = CHAID_bc_dataset_process()
     # X, y, str_cols = spam_dataset_process()
 
 
